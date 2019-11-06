@@ -64,8 +64,13 @@ public class Gen {
 			String end = st.nextToken();
 		}
 		else if (operación.equals("copy")){
-			String pos1 = st.nextToken();
-			String pos2 = st.nextToken();
+			int pos1 = Integer.parseInt(st.nextToken());
+			int pos2 = Integer.parseInt(st.nextToken());
+			
+			Secuencia aux = lista[pos1];
+			lista[pos2] = aux;
+			
+			
 		}
 		else if (operación.equals("swap")){
 			String pos1 = st.nextToken();
@@ -74,7 +79,8 @@ public class Gen {
 			String start2 = st.nextToken();
 		}
 		else if (operación.equals("transcribe")){
-			String pos = st.nextToken();
+			int pos = Integer.parseInt(st.nextToken());
+			
 		}
 	} 
 	
