@@ -1,43 +1,50 @@
 
 public class Secuencia {
-	private LList<Nucleotido> lista;
+	private LList<Nucleotido> cadena;
 	private String tipo;
 	
 	public Secuencia() {
-		lista = new LList<Nucleotido>();
+		cadena = new LList<Nucleotido>();
 	}
 	
 	public Secuencia(String tipo, String cadena) {
 		this.tipo = tipo;
-		lista = new LList<Nucleotido>();
+		this.cadena = new LList<Nucleotido>();
 		for(char c: cadena.toCharArray()) {
-			lista.append(new Nucleotido(c));
+			this.cadena.append(new Nucleotido(c));
 		}
 	}
 	
-	public void insert(Nucleotido n) {
-		lista.insert(n);
-	}
-	
-	public void remove() {
-	}
-	
-	public void print(int pos) {
-	}
-	
-	public void clip() {
-		
-	}
-	public void copy() {
-		
-	}
-	
-	public void swap() {
-		
-	}
-	
-	public void transcribe() {
-		
+	public LList<Nucleotido> getCadena() {
+		return cadena;
 	}
 
+	public void setCadena(LList<Nucleotido> cadena) {
+		this.cadena = cadena;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public int length() {
+		return cadena.length();
+	}
+	
+	public String toString() {
+		String tipo = this.tipo;
+		String cadena = "";
+		this.cadena.moveToStart();
+		for(int i =0 ; i<this.cadena.length(); i++) {
+			cadena += this.cadena.getValue().getNucleotido();
+			this.cadena.next();
+			}
+		String datos = tipo + " " + cadena;
+		return datos;
+	}
+	
 }

@@ -25,15 +25,26 @@ public class Gen {
 		
 		// Identificación de operación
 		if (operación.equals("insert")) {
-			int pos = Integer.parseInt(st.nextToken());
-			String tipo = st.nextToken();
-			String sec = st.nextToken();
+			try {
+				int pos = Integer.parseInt(st.nextToken());
+				String tipo = st.nextToken();
+				String sec = st.nextToken();
+				this.lista[pos] = new Secuencia(tipo, sec);
+			}
+			catch (Exception e) {
+				return;
+			}
 			
-			this.lista[pos] = new Secuencia(tipo, sec);
 		}
 		else if (operación.equals("remove")){
-			int pos = Integer.parseInt(st.nextToken());
-			this.lista[pos] = null;
+			try {
+				int pos = Integer.parseInt(st.nextToken());
+				this.lista[pos] = null;
+			}
+			catch (Exception e){
+				return;
+			}
+			
 		} 
 		else if (operación.equals("print")){
 			Integer pos = null;
@@ -45,7 +56,7 @@ public class Gen {
 				pos = null;
 			}
 			
-			if (pos != null) {
+			if (pos == null) {
 				for (int i=0;i<lista.length;i++) {
 					if (lista[i] != null) {
 						System.out.println(i + " " + lista[i]);
@@ -59,9 +70,34 @@ public class Gen {
 			
 		}
 		else if (operación.equals("clip")){
-			String pos = st.nextToken();
-			String start = st.nextToken();
-			String end = st.nextToken();
+			try {
+				int pos1 = Integer.parseInt(st.nextToken());
+				int start = Integer.parseInt(st.nextToken());
+				Integer end = null;
+				try {
+					end = Integer.parseInt(st.nextToken());
+				}
+				catch (Exception e) {}
+				
+				if (end == null) {
+					end = lista[pos1].length() - 1;
+				}
+				
+				LList<Nucleotido> cadena = lista[pos1].getCadena();
+				LList<Nucleotido> cadenaAux = new LList<Nucleotido>();
+				
+				cadena.moveToPos(start);
+				for(int i=start;i<=end;i++) {
+					cadenaAux.append(cadena.getValue());
+					cadena.next();
+				}
+				
+				lista[pos1].setCadena(cadenaAux);
+				
+			}
+			catch (Exception e) {
+				return;
+			}
 		}
 		else if (operación.equals("copy")){
 			int pos1 = Integer.parseInt(st.nextToken());
@@ -69,14 +105,12 @@ public class Gen {
 			
 			Secuencia aux = lista[pos1];
 			lista[pos2] = aux;
-			
-			
 		}
 		else if (operación.equals("swap")){
-			String pos1 = st.nextToken();
-			String start1 = st.nextToken();
-			String pos2 = st.nextToken();
-			String start2 = st.nextToken();
+			int pos1 = Integer.parseInt(st.nextToken());
+			int start1 = Integer.parseInt(st.nextToken());
+			int pos2 = Integer.parseInt(st.nextToken());
+			int start2 = Integer.parseInt(st.nextToken());
 		}
 		else if (operación.equals("transcribe")){
 			int pos = Integer.parseInt(st.nextToken());
