@@ -21,10 +21,10 @@ public class Gen {
 	protected void procesar(String linea) {
 		// Troceo de linea
 		StringTokenizer st = new StringTokenizer(linea);
-		String operación = st.nextToken();
+		String operacion = st.nextToken();
 		
-		// Identificación de operación
-		if (operación.equals("insert")) {
+		// Identificacion de operacion
+		if (operacion.equals("insert")) {
 			String sec = null;
 			try {
 				int pos = Integer.parseInt(st.nextToken());
@@ -64,7 +64,7 @@ public class Gen {
 			}
 		}
 		
-		else if (operación.equals("remove")){
+		else if (operacion.equals("remove")){
 			try {
 				int pos = Integer.parseInt(st.nextToken());
 				this.lista[pos] = null;
@@ -74,7 +74,7 @@ public class Gen {
 			}
 		} 
 		
-		else if (operación.equals("print")){
+		else if (operacion.equals("print")){
 			Integer pos = null;
 			
 			try {
@@ -96,7 +96,7 @@ public class Gen {
 			}
 		}
 		
-		else if (operación.equals("clip")){
+		else if (operacion.equals("clip")){
 			try {
 				int pos1 = Integer.parseInt(st.nextToken());
 				int start = Integer.parseInt(st.nextToken());
@@ -126,7 +126,7 @@ public class Gen {
 			}
 		}
 		
-		else if (operación.equals("copy")){
+		else if (operacion.equals("copy")){
 			int pos1 = Integer.parseInt(st.nextToken());
 			int pos2 = Integer.parseInt(st.nextToken());
 			
@@ -147,7 +147,7 @@ public class Gen {
 			lista[pos2] = aux;
 		}
 		
-		else if (operación.equals("swap")){
+		else if (operacion.equals("swap")){
 			int pos1 = Integer.parseInt(st.nextToken());
 			int start1 = Integer.parseInt(st.nextToken());
 			int pos2 = Integer.parseInt(st.nextToken());
@@ -186,7 +186,7 @@ public class Gen {
 			}
 		}
 		
-		else if (operación.equals("transcribe")){
+		else if (operacion.equals("transcribe")){
 			int pos = Integer.parseInt(st.nextToken());
 			Secuencia sec = lista[pos];
 			LList<Nucleotido> cad = sec.getCadena();
