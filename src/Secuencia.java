@@ -14,6 +14,11 @@ public class Secuencia {
 			this.cadena.append(new Nucleotido(c));
 		}
 	}
+		
+	public Secuencia(String tipo, LList<Nucleotido> cadena) {
+		this.tipo = tipo;
+		this.cadena = cadena;
+	}
 	
 	public LList<Nucleotido> getCadena() {
 		return cadena;

@@ -11,12 +11,12 @@ public class LList<E> implements List<E> {
 	
 	public LList(int size)
 	{
-		this(); //Ignora el tamaño
+		this(); //Ignora el tamano
 	}
 	
 	public LList() {
-		head = tail = curr= new Nodo<E>(null);
-		size =0;
+		head = tail = curr = new Nodo<E>(null);
+		size = 0;
 	}
 
 	@Override

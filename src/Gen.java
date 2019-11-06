@@ -1,7 +1,7 @@
 // Nombre: Oleg
 // DNI: Y4903207N
-// Curso: 2º
-// Grado: Ingeniería de la Salud
+// Curso: 2
+// Grado: Ingenieria de la Salud
 // Grupo: A
 
 import java.io.BufferedReader;
@@ -29,11 +29,32 @@ public class Gen {
 			try {
 				int pos = Integer.parseInt(st.nextToken());
 				String tipo = st.nextToken();
-				sec = st.nextToken();
+				try {
+					sec = st.nextToken();
+				}
+				catch (Exception e) {}
+					
 				if (sec == null) {
 					this.lista[pos] = new Secuencia();
 					this.lista[pos].setTipo(tipo);
+					return;
 				}
+				
+				if (tipo == "ADN") {
+					for (char nuc: sec.toCharArray()) {
+						if (nuc != 'A' && nuc != 'C' && nuc != 'G' && nuc != 'T') {
+							return;
+						}
+					}
+				}
+				else if (tipo=="ARN") {
+					for (char nuc: sec.toCharArray()) {
+						if (nuc != 'A' && nuc != 'C' && nuc != 'G' && nuc != 'U') {
+							return;
+						}
+					}
+				}
+				
 				else {
 					this.lista[pos] = new Secuencia(tipo, sec);
 				}
@@ -42,6 +63,7 @@ public class Gen {
 				return;
 			}
 		}
+		
 		else if (operación.equals("remove")){
 			try {
 				int pos = Integer.parseInt(st.nextToken());
@@ -51,6 +73,7 @@ public class Gen {
 				return;
 			}
 		} 
+		
 		else if (operación.equals("print")){
 			Integer pos = null;
 			
@@ -71,9 +94,8 @@ public class Gen {
 			else {
 				System.out.println(pos + " " + lista[pos]);
 			}
-			
-			
 		}
+		
 		else if (operación.equals("clip")){
 			try {
 				int pos1 = Integer.parseInt(st.nextToken());
@@ -103,14 +125,28 @@ public class Gen {
 				return;
 			}
 		}
+		
 		else if (operación.equals("copy")){
 			int pos1 = Integer.parseInt(st.nextToken());
 			int pos2 = Integer.parseInt(st.nextToken());
 			
-			Secuencia aux = lista[pos1];
+			Secuencia sec1 = lista[pos1];
+			String type = sec1.getTipo();
+			
+			LList<Nucleotido> cadena = new LList<Nucleotido>();
+			
+			LList<Nucleotido> cad = sec1.getCadena();
+			cad.moveToPos(0);
+			for (int i=0; i<sec1.length();i++) {
+				cadena.append(new Nucleotido(cad.getValue().getNucleotido()));
+				cad.next();
+			}
+			
+			Secuencia aux = new Secuencia(type, cadena);
+			
 			lista[pos2] = aux;
 		}
-		/*
+		
 		else if (operación.equals("swap")){
 			int pos1 = Integer.parseInt(st.nextToken());
 			int start1 = Integer.parseInt(st.nextToken());
@@ -119,25 +155,37 @@ public class Gen {
 			
 			LList<Nucleotido> cadena1 = lista[pos1].getCadena();
 			LList<Nucleotido> cadena2 = lista[pos2].getCadena();
+			
 			LList<Nucleotido> cadenaAux1 = new LList<Nucleotido>();
 			LList<Nucleotido> cadenaAux2 = new LList<Nucleotido>();
 			
 			cadena1.moveToPos(start1);
-			for(int i=start1;i<=cadena1.length()-1;i++) {
+			int a =cadena1.length() - start1;
+			for(int i=0;i<=a-1;i++) {
 				cadenaAux1.append(cadena1.getValue());
-				cadena1.next();
+				cadena1.remove();
 			}
 			
 			cadena2.moveToPos(start2);
-			for(int i=start2;i<=cadena2.length()-1;i++) {
+			int b =cadena2.length() - start2;
+			for(int i=0;i<=b-1;i++) {
 				cadenaAux2.append(cadena2.getValue());
-				cadena2.next();
+				cadena2.remove();
 			}
 			
-			lista[pos1].setCadena(cadenaAux2);
-			lista[pos2].setCadena(cadenaAux1);	
+			cadenaAux1.moveToPos(0);
+			for(int i=0;i<=cadenaAux1.length()-1;i++) {
+				cadena2.append(cadenaAux1.getValue());
+				cadenaAux1.next();
+			}
+			
+			cadenaAux2.moveToPos(0);
+			for(int u=0;u<=cadenaAux2.length()-1;u++) {
+				cadena1.append(cadenaAux2.getValue());
+				cadenaAux2.next();
+			}
 		}
-		*/
+		
 		else if (operación.equals("transcribe")){
 			int pos = Integer.parseInt(st.nextToken());
 			Secuencia sec = lista[pos];
@@ -190,7 +238,4 @@ public class Gen {
 		Gen gen = new Gen(Integer.parseInt(args[0]));
 		gen.leerFichero(args[1]);	
 	}
-	
-	
-
 }
