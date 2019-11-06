@@ -12,10 +12,10 @@ import java.util.StringTokenizer;
 
 // Esqueleto basico para el ejercicio "Secuencias Geneticas con listas"
 public class Gen {
-	
+	Secuencia[] lista;
 	
 	public Gen(int n) {
-		Secuencia[] lista = new Secuencia[n];
+		lista = new Secuencia[n];
 	}
 	
 	protected void procesar(String linea) {
@@ -25,12 +25,14 @@ public class Gen {
 		
 		// Identificación de operación
 		if (operación.equals("insert")) {
-			String pos = st.nextToken();
+			int pos = Integer.parseInt(st.nextToken());
 			String tipo = st.nextToken();
 			String sec = st.nextToken();
+			
+			this.lista[pos] = new Secuencia(tipo, sec);
 		}
 		else if (operación.equals("remove")){
-			String pos = st.nextToken();
+			int pos = Integer.parseInt(st.nextToken());
 		} 
 		else if (operación.equals("print")){
 			String pos = st.nextToken();	

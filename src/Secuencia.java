@@ -14,4 +14,31 @@ public class Secuencia {
 			lista.append(new Nucleotido(c));
 		}
 	}
+	
+	public void insert(Nucleotido n) {
+		lista.insert(n);
+	}
+	
+	public void remove() {
+	}
+	
+	public void print() {
+		
+	}
+	
+	public void clip() {
+		
+	}
+	public void copy() {
+		
+	}
+	
+	public void swap() {
+		
+	}
+	
+	public void transcribe() {
+		
+	}
+
 }
