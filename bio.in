@@ -1,0 +1,11 @@
+insert 0 ADN AAAAAGTGATAGA
+insert 4 ADN CTGAC
+insert 5 ADN TGAC
+insert 9 ADN
+swap 0 7 9 0
+transcribe 5
+clip 0 2
+copy 4 2
+swap 4 0 0 5
+remove 4
+print
