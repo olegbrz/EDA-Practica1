@@ -1,0 +1,9 @@
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+.project
+.classpath
+.settings
