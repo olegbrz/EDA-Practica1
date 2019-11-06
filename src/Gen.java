@@ -33,6 +33,7 @@ public class Gen {
 		}
 		else if (operación.equals("remove")){
 			int pos = Integer.parseInt(st.nextToken());
+			this.lista[pos] = null;
 		} 
 		else if (operación.equals("print")){
 			String pos = st.nextToken();	
