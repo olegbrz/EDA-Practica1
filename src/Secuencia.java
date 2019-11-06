@@ -22,8 +22,7 @@ public class Secuencia {
 	public void remove() {
 	}
 	
-	public void print() {
-		
+	public void print(int pos) {
 	}
 	
 	public void clip() {

@@ -36,8 +36,28 @@ public class Gen {
 			this.lista[pos] = null;
 		} 
 		else if (operación.equals("print")){
-			String pos = st.nextToken();	
+			Integer pos = null;
+			
+			try {
+				pos = Integer.parseInt(st.nextToken());
+			}
+			catch (Exception e) {
+				pos = null;
+			}
+			
+			if (pos != null) {
+				for (int i=0;i<lista.length;i++) {
+					if (lista[i] != null) {
+						System.out.println(i + " " + lista[i]);
+					}
 				}
+			}
+			else {
+				System.out.println(pos + " " + lista[pos]);
+			}
+			
+			
+		}
 		else if (operación.equals("clip")){
 			String pos = st.nextToken();
 			String start = st.nextToken();
