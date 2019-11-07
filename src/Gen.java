@@ -1,241 +1,224 @@
-// Nombre: Oleg
-// DNI: Y4903207N
-// Curso: 2
-// Grado: Ingenieria de la Salud
-// Grupo: A
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-// Esqueleto basico para el ejercicio "Secuencias Geneticas con listas"
 public class Gen {
-	Secuencia[] lista;
-	
+	Sequence[] secuencesList;
+
 	public Gen(int n) {
-		lista = new Secuencia[n];
+		secuencesList = new Sequence[n];
 	}
-	
-	protected void procesar(String linea) {
-		// Troceo de linea
+
+	protected void process(String linea) {
 		StringTokenizer st = new StringTokenizer(linea);
-		String operacion = st.nextToken();
-		
-		// Identificacion de operacion
-		if (operacion.equals("insert")) {
-			String sec = null;
+		String operation = st.nextToken();
+
+		if (operation.equals("insert")) {
+			String sequence = null;
 			try {
-				int pos = Integer.parseInt(st.nextToken());
-				String tipo = st.nextToken();
+				int position = Integer.parseInt(st.nextToken());
+				String type = st.nextToken();
 				try {
-					sec = st.nextToken();
+					sequence = st.nextToken();
+				} catch (Exception e) {
 				}
-				catch (Exception e) {}
-					
-				if (sec == null) {
-					this.lista[pos] = new Secuencia();
-					this.lista[pos].setTipo(tipo);
+
+				if (sequence == null) {
+					this.secuencesList[position] = new Sequence();
+					this.secuencesList[position].setType(type);
 					return;
 				}
-				
-				if (tipo == "ADN") {
-					for (char nuc: sec.toCharArray()) {
-						if (nuc != 'A' && nuc != 'C' && nuc != 'G' && nuc != 'T') {
+
+				if (type == "ADN") {
+					for (char nucleotide : sequence.toCharArray()) {
+						if (nucleotide != 'A' && nucleotide != 'C' && nucleotide != 'G' && nucleotide != 'T') {
+							return;
+						}
+					}
+				} else if (type == "ARN") {
+					for (char nucleotide : sequence.toCharArray()) {
+						if (nucleotide != 'A' && nucleotide != 'C' && nucleotide != 'G' && nucleotide != 'U') {
 							return;
 						}
 					}
 				}
-				else if (tipo=="ARN") {
-					for (char nuc: sec.toCharArray()) {
-						if (nuc != 'A' && nuc != 'C' && nuc != 'G' && nuc != 'U') {
-							return;
-						}
-					}
-				}
-				
+
 				else {
-					this.lista[pos] = new Secuencia(tipo, sec);
+					this.secuencesList[position] = new Sequence(type, sequence);
 				}
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				return;
 			}
 		}
-		
-		else if (operacion.equals("remove")){
+
+		else if (operation.equals("remove")) {
 			try {
-				int pos = Integer.parseInt(st.nextToken());
-				this.lista[pos] = null;
-			}
-			catch (Exception e){
+				int position = Integer.parseInt(st.nextToken());
+				this.secuencesList[position] = null;
+			} catch (Exception e) {
 				return;
 			}
-		} 
-		
-		else if (operacion.equals("print")){
-			Integer pos = null;
-			
+		}
+
+		else if (operation.equals("print")) {
+			Integer position = null;
+
 			try {
-				pos = Integer.parseInt(st.nextToken());
+				position = Integer.parseInt(st.nextToken());
+			} catch (Exception e) {
+				position = null;
 			}
-			catch (Exception e) {
-				pos = null;
-			}
-			
-			if (pos == null) {
-				for (int i=0;i<lista.length;i++) {
-					if (lista[i] != null) {
-						System.out.println(i + " " + lista[i]);
+
+			if (position == null) {
+				for (int i = 0; i < secuencesList.length; i++) {
+					if (secuencesList[i] != null) {
+						System.out.println(i + " " + secuencesList[i]);
 					}
 				}
-			}
-			else {
-				System.out.println(pos + " " + lista[pos]);
+			} else {
+				System.out.println(position + " " + secuencesList[position]);
 			}
 		}
-		
-		else if (operacion.equals("clip")){
+
+		else if (operation.equals("clip")) {
 			try {
-				int pos1 = Integer.parseInt(st.nextToken());
+				int position = Integer.parseInt(st.nextToken());
 				int start = Integer.parseInt(st.nextToken());
 				Integer end = null;
 				try {
 					end = Integer.parseInt(st.nextToken());
+				} catch (Exception e) {
 				}
-				catch (Exception e) {}
-				
+
 				if (end == null) {
-					end = lista[pos1].length() - 1;
+					end = secuencesList[position].length() - 1;
 				}
-				
-				LList<Nucleotido> cadena = lista[pos1].getCadena();
-				LList<Nucleotido> cadenaAux = new LList<Nucleotido>();
-				
-				cadena.moveToPos(start);
-				for(int i=start;i<=end;i++) {
-					cadenaAux.append(cadena.getValue());
-					cadena.next();
+
+				LList<Nucleotide> sequence = secuencesList[position].getSequence();
+				LList<Nucleotide> auxSequence = new LList<Nucleotide>();
+
+				sequence.moveToPos(start);
+				for (int i = start; i <= end; i++) {
+					auxSequence.append(sequence.getValue());
+					sequence.next();
 				}
-				
-				lista[pos1].setCadena(cadenaAux);
-			}
-			catch (Exception e) {
+
+				secuencesList[position].setSequence(auxSequence);
+			} catch (Exception e) {
 				return;
 			}
 		}
-		
-		else if (operacion.equals("copy")){
-			int pos1 = Integer.parseInt(st.nextToken());
-			int pos2 = Integer.parseInt(st.nextToken());
-			
-			Secuencia sec1 = lista[pos1];
-			String type = sec1.getTipo();
-			
-			LList<Nucleotido> cadena = new LList<Nucleotido>();
-			
-			LList<Nucleotido> cad = sec1.getCadena();
-			cad.moveToPos(0);
-			for (int i=0; i<sec1.length();i++) {
-				cadena.append(new Nucleotido(cad.getValue().getNucleotido()));
-				cad.next();
+
+		else if (operation.equals("copy")) {
+			int position1 = Integer.parseInt(st.nextToken());
+			int position2 = Integer.parseInt(st.nextToken());
+
+			Sequence sec1 = secuencesList[position1];
+			String type = sec1.getType();
+
+			LList<Nucleotide> auxSequence = new LList<Nucleotide>();
+
+			LList<Nucleotide> sequence = sec1.getSequence();
+			sequence.moveToPos(0);
+			for (int i = 0; i < sec1.length(); i++) {
+				auxSequence.append(new Nucleotide(sequence.getValue().getNucleotido()));
+				sequence.next();
 			}
-			
-			Secuencia aux = new Secuencia(type, cadena);
-			
-			lista[pos2] = aux;
+
+			Sequence aux = new Sequence(type, auxSequence);
+
+			secuencesList[position2] = aux;
 		}
-		
-		else if (operacion.equals("swap")){
-			int pos1 = Integer.parseInt(st.nextToken());
+
+		else if (operation.equals("swap")) {
+			int position1 = Integer.parseInt(st.nextToken());
 			int start1 = Integer.parseInt(st.nextToken());
-			int pos2 = Integer.parseInt(st.nextToken());
+			int position2 = Integer.parseInt(st.nextToken());
 			int start2 = Integer.parseInt(st.nextToken());
-			
-			LList<Nucleotido> cadena1 = lista[pos1].getCadena();
-			LList<Nucleotido> cadena2 = lista[pos2].getCadena();
-			
-			LList<Nucleotido> cadenaAux1 = new LList<Nucleotido>();
-			LList<Nucleotido> cadenaAux2 = new LList<Nucleotido>();
-			
-			cadena1.moveToPos(start1);
-			int a =cadena1.length() - start1;
-			for(int i=0;i<=a-1;i++) {
-				cadenaAux1.append(cadena1.getValue());
-				cadena1.remove();
+
+			LList<Nucleotide> sequence1 = secuencesList[position1].getSequence();
+			LList<Nucleotide> sequence2 = secuencesList[position2].getSequence();
+
+			LList<Nucleotide> auxSequence1 = new LList<Nucleotide>();
+			LList<Nucleotide> auxSequence2 = new LList<Nucleotide>();
+
+			sequence1.moveToPos(start1);
+			int a = sequence1.length() - start1;
+			for (int i = 0; i <= a - 1; i++) {
+				auxSequence1.append(sequence1.getValue());
+				sequence1.remove();
 			}
-			
-			cadena2.moveToPos(start2);
-			int b =cadena2.length() - start2;
-			for(int i=0;i<=b-1;i++) {
-				cadenaAux2.append(cadena2.getValue());
-				cadena2.remove();
+
+			sequence2.moveToPos(start2);
+			int b = sequence2.length() - start2;
+			for (int i = 0; i <= b - 1; i++) {
+				auxSequence2.append(sequence2.getValue());
+				sequence2.remove();
 			}
-			
-			cadenaAux1.moveToPos(0);
-			for(int i=0;i<=cadenaAux1.length()-1;i++) {
-				cadena2.append(cadenaAux1.getValue());
-				cadenaAux1.next();
+
+			auxSequence1.moveToPos(0);
+			for (int i = 0; i <= auxSequence1.length() - 1; i++) {
+				sequence2.append(auxSequence1.getValue());
+				auxSequence1.next();
 			}
-			
-			cadenaAux2.moveToPos(0);
-			for(int u=0;u<=cadenaAux2.length()-1;u++) {
-				cadena1.append(cadenaAux2.getValue());
-				cadenaAux2.next();
+
+			auxSequence2.moveToPos(0);
+			for (int i = 0; i <= auxSequence2.length() - 1; i++) {
+				sequence1.append(auxSequence2.getValue());
+				auxSequence2.next();
 			}
 		}
-		
-		else if (operacion.equals("transcribe")){
-			int pos = Integer.parseInt(st.nextToken());
-			Secuencia sec = lista[pos];
-			LList<Nucleotido> cad = sec.getCadena();
-			LList<Nucleotido> cadAux = new LList<Nucleotido>();
-			
+
+		else if (operation.equals("transcribe")) {
+			int position = Integer.parseInt(st.nextToken());
+			Sequence sequence = secuencesList[position];
+			LList<Nucleotide> cad = sequence.getSequence();
+			LList<Nucleotide> cadAux = new LList<Nucleotide>();
+
 			cad.moveToEnd();
 			cad.prev();
-			for (int i=1;i<=cad.length();i++) {
-				char nuc = cad.getValue().getNucleotido();
-				
-				if (nuc == 'A') {
-					nuc = 'U';
+			for (int i = 1; i <= cad.length(); i++) {
+				char nucleotide = cad.getValue().getNucleotido();
+
+				if (nucleotide == 'A') {
+					nucleotide = 'U';
+				} else if (nucleotide == 'T') {
+					nucleotide = 'A';
+				} else if (nucleotide == 'C') {
+					nucleotide = 'G';
+				} else if (nucleotide == 'G') {
+					nucleotide = 'C';
 				}
-				else if (nuc == 'T') {
-					nuc = 'A';
-				}
-				else if (nuc == 'C') {
-					nuc = 'G';				
-				}
-				else if (nuc == 'G') {
-					nuc = 'C';
-				}
-				cadAux.append(new Nucleotido(nuc));
+
+				cadAux.append(new Nucleotide(nucleotide));
 				cad.prev();
-				nuc = cad.getValue().getNucleotido();
-			sec.setTipo("ARN");
-			sec.setCadena(cadAux);
+				nucleotide = cad.getValue().getNucleotido();
+				sequence.setType("ARN");
+				sequence.setSequence(cadAux);
 			}
 		}
-	} 
-	
-	public void leerFichero(String nombreFichero) {
+	}
+
+	public void readFile(String fileName) {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(nombreFichero));
-			String linea;
-			while ((linea = br.readLine()) != null)   {
-				  procesar(linea);
+			BufferedReader br = new BufferedReader(new FileReader(fileName));
+			String line;
+			while ((line = br.readLine()) != null) {
+				process(line);
 			}
 			br.close();
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		Gen gen = new Gen(Integer.parseInt(args[0]));
-		gen.leerFichero(args[1]);	
+		gen.readFile(args[1]);
 	}
 }

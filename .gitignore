@@ -7,3 +7,9 @@
 .project
 .classpath
 .settings
+
+# Visual Code
+.vscode
+
+# Formatter
+eclipse-formatter.xml

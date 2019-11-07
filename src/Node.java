@@ -1,29 +1,29 @@
 
-public class Nodo<E> {
+public class Node<E> {
 	private E element;
-	private Nodo<E> next;
-	
-	public Nodo(Nodo<E> next) {
+	private Node<E> next;
+
+	public Node(Node<E> next) {
 		this.next = next;
 	}
-	
-	public Nodo(E element, Nodo<E> next) {
+
+	public Node(E element, Node<E> next) {
 		this.element = element;
 		this.next = next;
 	}
-	
-	public Nodo<E> getNext()  {
+
+	public Node<E> getNext() {
 		return next;
 	}
-	
-	public Nodo<E> setNext(Nodo<E> next) {
+
+	public Node<E> setNext(Node<E> next) {
 		return this.next = next;
 	}
-	
+
 	public E getElement() {
 		return element;
 	}
-	
+
 	public void setElement(E element) {
 		this.element = element;
 	}

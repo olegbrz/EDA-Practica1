@@ -1,42 +1,39 @@
 
 public class LList<E> implements List<E> {
 
-	private Nodo<E> head;
-	private Nodo<E> tail;
-	private Nodo<E> curr;
+	private Node<E> head;
+	private Node<E> tail;
+	private Node<E> curr;
 	private int size;
-	
-	
-	//Constructores
-	
-	public LList(int size)
-	{
-		this(); //Ignora el tamano
+
+	public LList(int size) {
+		this();
 	}
-	
+
 	public LList() {
-		head = tail = curr = new Nodo<E>(null);
+		head = tail = curr = new Node<E>(null);
 		size = 0;
 	}
 
 	@Override
 	public void clear() {
-		 //head.setNext(null);         //diria que no hace falta
-		 curr = tail = head = new Nodo<E>(null); // Create header
-		 size = 0;
+		curr = tail = head = new Node<E>(null);
+		size = 0;
 	}
 
 	@Override
 	public void insert(E item) {
-		curr.setNext(new Nodo<E>(item, curr.getNext()));  
-		if (tail == curr) {tail = curr.getNext();  }// New tail
+		curr.setNext(new Node<E>(item, curr.getNext()));
+		if (tail == curr) {
+			tail = curr.getNext();
+		} // New tail
 		size++;
 	}
 
 	@Override
 	public void append(E item) {
-		tail = tail.setNext(new Nodo<E>(item, null));
-		size++;		
+		tail = tail.setNext(new Node<E>(item, null));
+		size++;
 	}
 
 	@Override
@@ -44,18 +41,18 @@ public class LList<E> implements List<E> {
 		if (curr.getNext() == null) {
 			return null; // Nothing to remove
 		}
-		E it = curr.getNext().getElement();  // Remember value
+		E it = curr.getNext().getElement(); // Remember value
 		if (tail == curr.getNext()) {
 			tail = curr; // Removed last
 		}
 		curr.setNext(curr.getNext().getNext()); // Remove from list
-		size--;				// Decrement count
+		size--; // Decrement count
 		return it;
 	}
 
 	@Override
 	public void moveToStart() {
-		curr = head; 		
+		curr = head;
 	}
 
 	@Override
@@ -66,7 +63,7 @@ public class LList<E> implements List<E> {
 	@Override
 	public void prev() {
 		if (curr != head) {
-			Nodo<E> temp = head;
+			Node<E> temp = head;
 			// March down list until we find the previous element
 			while (temp.getNext() != curr) {
 				temp = temp.getNext();
@@ -78,22 +75,22 @@ public class LList<E> implements List<E> {
 	@Override
 	public void next() {
 		curr = curr.getNext();
-		
+
 	}
 
 	@Override
-	public int length() {		
+	public int length() {
 		return size;
 	}
 
 	@Override
 	public int currPos() {
-		Nodo<E> temp = head;
-		  int i;
-		  for (i=0; curr != temp; i++) {
-		    temp = temp.getNext();
-		  }
-		  return i;
+		Node<E> temp = head;
+		int i;
+		for (i = 0; curr != temp; i++) {
+			temp = temp.getNext();
+		}
+		return i;
 	}
 
 	@Override
@@ -113,13 +110,11 @@ public class LList<E> implements List<E> {
 		return curr.getNext().getElement();
 	}
 
-	public String toString()
-	{
-		String s="";
+	public String toString() {
+		String s = "";
 		moveToStart();
-		for(int i =0 ; i< size; i++)
-		{
-			s+= getValue();
+		for (int i = 0; i < size; i++) {
+			s += getValue();
 			next();
 		}
 		return s;
