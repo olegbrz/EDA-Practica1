@@ -33,13 +33,19 @@ public class Gen {
 
 				if (type == "ADN") {
 					for (char nucleotide : sequence.toCharArray()) {
-						if (nucleotide != 'A' && nucleotide != 'C' && nucleotide != 'G' && nucleotide != 'T') {
+						if (nucleotide != 'A' &&
+							nucleotide != 'C' &&
+							nucleotide != 'G' &&
+							nucleotide != 'T') {
 							return;
 						}
 					}
 				} else if (type == "ARN") {
 					for (char nucleotide : sequence.toCharArray()) {
-						if (nucleotide != 'A' && nucleotide != 'C' && nucleotide != 'G' && nucleotide != 'U') {
+						if (nucleotide != 'A' &&
+							nucleotide != 'C' &&
+							nucleotide != 'G' &&
+							nucleotide != 'U') {
 							return;
 						}
 					}
